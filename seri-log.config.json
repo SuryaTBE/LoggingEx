@@ -1,0 +1,34 @@
+{
+  "Serilog": {
+    "Using": [ "Serilog.Sinks.File", "Serilog.Sinks.Console" ], //In this line console is for storing logs in a console 
+    "MinimumLevel": {
+      "Default": "Information"
+    },
+    "WriteTo": [  //this is an array of objects that specifies the log sinks to which the log events will be written.
+      {
+        "Name": "File", //this specifies the Name of the sink.
+        "Args": {
+          "path": "./logs/webapi-.log", //this specifies the path to the log file that File sink will write
+          "rollingInterval": "Day", //this is used to specify how often to create a new log file.this log file name includes the Date in the format with specifed file path and extension.
+          "outputTemplate": "{Timestamp:yyyy-MM-dd HH:mm:ss}{CorrelationId}{level:u3}{Username}{Message:lj}{Exception}{NewLine}"
+          /* "outputTemplate": property accepts string value that can include placeholders for various information associated with each log event 
+             "{Timestamp:yyyy-MM-dd HH:mm:ss}": DateTime format of the log event
+             "{CorrelationId}":A unique identifier for the request or operation associated with the log event.
+             "{Level:u3}":Log level of the event abbreviated to 3 levels.
+             "{Username}":Username associated with the request or operation, if available.
+             "{Message:lj}":the log message associated with the log event is left-justified and trimmed to fit within the maximum message length.
+             "{Exception}":Any exception that is associated with the log event.
+             "{NewLine}": A new line Character.
+          */
+        }
+      },
+      //This linne is for Console file
+      {
+        "Name": "Console",
+        "Args": {
+          "outputTemplate": "{Timestamp:yyyy-MM-dd HH:mm:ss}[{level:u3}]{Message}{NewLine}{Exception}"
+        }
+      }
+    ]
+  }
+}
